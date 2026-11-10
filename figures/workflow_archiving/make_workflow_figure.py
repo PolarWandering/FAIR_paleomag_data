@@ -110,7 +110,7 @@ COL_BOXES = [(".col steps", "step (°C or mT)\nx, y, z (µA/m)\nerror\nvisible, 
                                 "interpretations: steps,\ntype, anchored, MAD"),
              ("Statistics module", "VGP per interpretation\nFisher mean of VGPs\n"
                                    "cutoff (here 45°)\nnot in the .col file"),
-             ("Paper, Table 1", "D ± ΔDx, I ± ΔIx\nK, A95, N\nfield tests\n"
+             ("Paper, Table 1", "D ± ΔDx, I ± ΔIx\nK, A$_{95}$, N\nfield tests\n"
                                 "not in the .col file")]
 COL_ARROWS = ["fit", "average", "report"]
 
@@ -121,7 +121,7 @@ LEFT, RIGHT, COLUMN_SPACE = 0.1, 0.1, 0.22     # COLUMN_SPACE as a fraction of a
 TOP = 0.32             # column headers
 PANEL = 1.5            # height of the panels
 CAPTIONS = 0.3         # captions under the panels (three lines of text need 0.29)
-STRIP = 0.62           # height of the archive boxes
+STRIP = 0.55           # height of the archive boxes
 ROW_GAP = 0.3          # from the boxes of one row to the panels of the next
 FIG_HEIGHT = TOP + 2 * (PANEL + CAPTIONS + STRIP) + ROW_GAP + 0.05
 
@@ -130,7 +130,8 @@ FIG_HEIGHT = TOP + 2 * (PANEL + CAPTIONS + STRIP) + ROW_GAP + 0.05
 plt.rcParams.update({
     "font.family": "sans-serif", "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
     "font.size": 5.5, "text.color": INK, "lines.linewidth": 0.7, "lines.markersize": 3,
-    "legend.frameon": False, "pdf.fonttype": 42})
+    "legend.frameon": False, "pdf.fonttype": 42,
+    "mathtext.default": "regular"})   # subscripts in the font of the text
 
 
 # ---------------------------------------------------------------------------
@@ -272,7 +273,7 @@ def magic_row(tables, specimen_name=MAGIC_SPECIMEN):
             color=color, decs=members["dir_dec"].tolist(), incs=members["dir_inc"].tolist(),
             mean=(mean["dir_dec"], mean["dir_inc"], mean["dir_alpha95"]),
             text=f"{component}: {mean['dir_dec']:05.1f}/{mean['dir_inc']:.1f}\n"
-                 f"α95 {mean['dir_alpha95']:.1f}°, k = {mean['dir_k']:.0f}\nn = {len(members)}",
+                 f"α$_{{95}}$ {mean['dir_alpha95']:.1f}°, k = {mean['dir_k']:.0f}\nn = {len(members)}",
             offset=offset, ha=ha))
 
     # column 4: the archived pole and the VGPs of its sites, reversed ones inverted
@@ -299,7 +300,7 @@ def magic_row(tables, specimen_name=MAGIC_SPECIMEN):
                         code="sites.specimens: fits averaged"),
         pole=dict(vgp_lon=vgp_lon, vgp_lat=vgp_lat, pole_lon=pole_lon, pole_lat=pole_lat,
                   a95=a95, study_lon=study_lon, study_lat=study_lat,
-                  caption=f"pole {pole_lon:.1f}°E, {pole_lat:.1f}°N, A95 {a95:.1f}°\n"
+                  caption=f"pole {pole_lon:.1f}°E, {pole_lat:.1f}°N, A$_{{95}}$ {a95:.1f}°\n"
                           f"N = {len(pole_sites)} site VGPs ({is_reversed.sum()} reversed, "
                           "inverted)",
                   code="locations.sites: sites averaged"),
@@ -402,7 +403,7 @@ def col_row(collection, specimen_name=COL_SPECIMEN):
         pole=dict(vgp_lon=kept["vgp_lon"].to_numpy(), vgp_lat=kept["vgp_lat"].to_numpy(),
                   pole_lon=pole_lon, pole_lat=pole_lat, a95=a95,
                   study_lon=chrms["site_lon"].mean(), study_lat=chrms["site_lat"].mean(),
-                  caption=f"pole {pole_lon:.1f}°E, {pole_lat:.1f}°N, A95 {a95:.1f}°\n"
+                  caption=f"pole {pole_lon:.1f}°E, {pole_lat:.1f}°N, A$_{{95}}$ {a95:.1f}°\n"
                           f"N = {len(kept)} VGPs",
                   code="computed; not in the .col file"),
         boxes=COL_BOXES, arrows=COL_ARROWS)
@@ -565,9 +566,9 @@ def draw_archive_strip(fig, axes, boxes, arrows):
                                     boxstyle="round,pad=0,rounding_size=0.05",
                                     mutation_aspect=width / height, facecolor=FILL,
                                     edgecolor=RULE, lw=0.6, clip_on=False))
-        ax.text(0.5, 0.92, title, transform=ax.transAxes, ha="center", va="top", fontsize=6.3,
+        ax.text(0.5, 1 - 0.05 / height, title, transform=ax.transAxes, ha="center", va="top", fontsize=6.3,
                 fontweight="bold")
-        ax.text(0.5, 0.72, fields, transform=ax.transAxes, ha="center", va="top", fontsize=5.2,
+        ax.text(0.5, 1 - 0.174 / height, fields, transform=ax.transAxes, ha="center", va="top", fontsize=5.2,
                 family="monospace", color=INK2, linespacing=1.25)
     for left, right, label in zip(axes[:-1], axes[1:], arrows):
         fig.add_artist(ConnectionPatch((0.93, 0.45), (0.07, 0.45), coordsA=left.transAxes,
