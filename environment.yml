@@ -1,0 +1,9 @@
+name: fair_paleomag_data
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy=2.4
+  - matplotlib-base=3.10
+  - pillow=12.1
+  - websocket-client=1.9
