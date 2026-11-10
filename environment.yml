@@ -5,8 +5,15 @@ dependencies:
   - python=3.11
   - numpy=2.4
   - matplotlib-base=3.10
+  - cartopy=0.25
   - pandas=3.0
+  - scipy
   - pillow=12.1
   - requests=2.34
   - websocket-client=1.9
   - jupyterlab=4.6
+  - pip
+  - pip:
+      # the plotting options used by figures/workflow_archiving are in
+      # PmagPy releases later than 4.5.2
+      - pmagpy>4.5.2
