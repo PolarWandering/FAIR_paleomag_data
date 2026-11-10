@@ -1,0 +1,31 @@
+% Minimal AGU document that typesets only the reference list for
+% "A community standard in FAIR paleomagnetic data publication".
+%
+% The citations live in the Word manuscript, so every entry of
+% FAIR_paleomag_refs.bib (exported from allrefs.bib with
+% `extract_tagged_refs.py FAIR_paleomag`) is included with \nocite.
+%
+% Build with build_reference_list.py, which makes both the PDF and the .docx.
+%
+% For the PDF the official AGU class (agujournal2019, which formats references
+% with apacite) is used. When tex4ht is running (\HCode defined) the plain
+% article class with apacite is used instead, because the AGU class redefines
+% thebibliography in a way that tex4ht flattens into a single paragraph. The
+% reference formatting itself comes from apacite in both cases.
+\ifdefined\HCode
+  \documentclass{article}
+  \usepackage[utf8]{inputenc}
+  \usepackage{apacite}
+  \bibliographystyle{apacite}
+\else
+  \documentclass{agujournal2019}
+\fi
+\usepackage{url}
+
+% AGU prints DOIs as resolvable links in published reference lists.
+\renewcommand{\doiprefix}{https://doi.org/\ignorespaces}
+
+\begin{document}
+\nocite{*}
+\bibliography{FAIR_paleomag_refs}
+\end{document}
