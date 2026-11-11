@@ -1,0 +1,11 @@
+{
+  "name": "fair-paleomag-data-tables",
+  "private": true,
+  "description": "Builds Table 1 of the FAIR paleomagnetic data standard paper",
+  "scripts": {
+    "build": "node make_converter_formats_table.js converter_formats.docx"
+  },
+  "dependencies": {
+    "docx": "9.15.3"
+  }
+}

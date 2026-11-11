@@ -14,6 +14,7 @@ dependencies:
   - requests=2.34
   - websocket-client=1.9
   - jupyterlab=4.6
+  - nodejs>=18
   - pip
   - pip:
       # the plotting options used by figures/workflow_archiving are in
