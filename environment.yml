@@ -10,6 +10,7 @@ dependencies:
   - scipy
   - pillow=12.1
   - openpyxl=3.1
+  - poppler
   - requests=2.34
   - websocket-client=1.9
   - jupyterlab=4.6

@@ -32,6 +32,10 @@ FAIR_paleomag_data/
 │   │   │   └── pmag_library.png
 │   │   ├── platforms.pdf                     figure (for the manuscript)
 │   │   └── platforms.png                     figure (600 dpi)
+│   ├── template_fields/                  the fields of the template and how each is required
+│   │   ├── make_template_figure.py           makes the figure from fair_template/definition.py
+│   │   ├── template_fields.pdf               figure (for the manuscript)
+│   │   └── template_fields.png               figure (600 dpi)
 │   └── workflow_archiving/               the levels of a dataset, as archived
 │       ├── make_workflow_figure.py           makes the figure from data/
 │       ├── workflow_archiving.pdf            figure (for the manuscript)
@@ -64,6 +68,7 @@ The files are unmodified copies of the published files. The studies are:
 | --- | --- | --- | --- |
 | [`figures/data_gap/`](figures/data_gap/) | The gap between measured and published paleomagnetic data: (a) papers using reconstructions vs. papers reporting poles, (b) the data behind a pole in MagIC studies and (c) the share of published poles with data in MagIC | `data_gap.ipynb` | [`data_gap.pdf`](figures/data_gap/data_gap.pdf), [`data_gap.png`](figures/data_gap/data_gap.png) |
 | [`figures/platforms/`](figures/platforms/) | The two data platforms that the standard builds on: (a) the home page of the MagIC database and (b) the data library of Paleomagnetism.org | `capture_platform_screenshots.py`, `make_platforms_figure.py` | [`platforms.pdf`](figures/platforms/platforms.pdf), [`platforms.png`](figures/platforms/platforms.png) |
+| [`figures/template_fields/`](figures/template_fields/) | The fields of the template, one panel per sheet of the template workbook (measurements, specimen directions, site means, poles and ages), each field coloured by its requirement level and shown with its MagIC column | `make_template_figure.py` | [`template_fields.pdf`](figures/template_fields/template_fields.pdf), [`template_fields.png`](figures/template_fields/template_fields.png) |
 | [`figures/workflow_archiving/`](figures/workflow_archiving/) | The levels of a paleomagnetic dataset, from the measurements of a specimen to the pole, and where each level is archived: in a MagIC contribution (top row) and in a Paleomagnetism.org collection (bottom row) | `make_workflow_figure.py` | [`workflow_archiving.pdf`](figures/workflow_archiving/workflow_archiving.pdf), [`workflow_archiving.png`](figures/workflow_archiving/workflow_archiving.png) |
 
 ### `figures/data_gap/`
@@ -94,6 +99,17 @@ python make_platforms_figure.py          # writes platforms.pdf and platforms.pn
 The committed screenshots were taken on 10 November 2026. Both websites change with time (the "Recent Contributions" list of MagIC, and the publications and map markers of the library), so running the capture script again gives screenshots of the sites as they are then, and not the committed ones. Running `make_platforms_figure.py` alone rebuilds the figure from the committed screenshots.
 
 The content of EarthRef.org, including the MagIC home page, is licensed under CC BY 4.0 unless otherwise noted on the site. The basemap of the library panel is drawn from OpenStreetMap tiles (© OpenStreetMap contributors).
+
+### `figures/template_fields/`
+
+The fields are defined in `fair_template/definition.py`, which also defines the full Shaat dikes example (Supplementary Table 2): for each field its group, readable header, MagIC table and column, units, requirement level and a note. Panel 1 shows the laboratory data files in two sections: the metadata supplied with the files and the measurement fields that the conversion must yield. The figure leaves out the citations (except in the ages panel), the experiment and measurement names, and the mean direction at the sampling location of the poles sheet, which are in the workbook.
+
+```bash
+cd figures/template_fields
+python make_template_figure.py   # writes template_fields.pdf and template_fields.png
+```
+
+The script writes the figure as an HTML page, prints it to PDF with headless Google Chrome or Chromium, crops the page to its content and renders the PNG from the PDF with `pdftoppm` (poppler). The Source Sans 3 and Source Code Pro fonts are loaded from Google Fonts, so the script needs a network connection unless the fonts are installed locally.
 
 ### `figures/workflow_archiving/`
 
@@ -134,4 +150,4 @@ mamba env create -f environment.yml
 mamba activate fair_paleomag_data
 ```
 
-`capture_platform_screenshots.py` also requires Google Chrome (version 157 was used). The path to Chrome is set by the `CHROME` constant at the top of the script and is that of a macOS installation; change it on other systems.
+`capture_platform_screenshots.py` also requires Google Chrome (version 157 was used). The path to Chrome is set by the `CHROME` constant at the top of the script and is that of a macOS installation; change it on other systems. `make_template_figure.py` also requires Google Chrome or Chromium, which it looks for at the macOS installation path and then on the `PATH`.

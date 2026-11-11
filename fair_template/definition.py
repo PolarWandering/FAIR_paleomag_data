@@ -8,7 +8,7 @@ the metadata supplied with the laboratory data files so that they can be
 converted into the MagIC measurements table.
 
 The definition is shared by the template figure (figures/template_fields/) and the
-supplementary tables (tables/template_workbook/ and tables/shaat_dikes_example/).
+full Shaat dikes example (Supplementary Table 2, tables/shaat_dikes_example/).
 """
 
 from collections import OrderedDict, namedtuple
@@ -45,7 +45,7 @@ CONTRIBUTION_FIELDS = [
 # Metadata supplied with the laboratory data files, in lieu of a measurements table, so
 # that the files can be converted into the MagIC measurements table (following D. van
 # Hinsbergen's metadata sheet of 2026-11-08). Shown in panel 1 of the template figure; sheet 1
-# of the template workbook has its own layout (tables/template_workbook/).
+# of the template workbook (Supplementary Table 1) has its own layout.
 LAB_FILE_FIELDS = [
     F("Contribution", "Reference", "contribution", "reference", "", MAGIC,
       "Paper DOI, after publication"),
