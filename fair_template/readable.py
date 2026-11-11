@@ -334,10 +334,16 @@ def write_readable_sheet(wb, title, fields, rows, note):
 
 
 def write_readme(wb, lines):
+    """The README sheet: one line per row; a (text, url) pair is written as a hyperlink."""
     ws = wb.active
     ws.title = "README"
     for line in lines:
-        ws.append([line])
+        text, url = (line, None) if isinstance(line, str) else line
+        ws.append([text])
+        if url:
+            cell = ws.cell(ws.max_row, 1)
+            cell.hyperlink = url
+            cell.style = "Hyperlink"
     ws["A1"].font = Font(bold=True, size=14)
     ws.column_dimensions["A"].width = 130
     for row in ws.iter_rows():

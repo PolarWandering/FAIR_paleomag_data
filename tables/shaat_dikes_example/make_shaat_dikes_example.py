@@ -56,6 +56,9 @@ from fair_template.readable import (angle, build_ages, build_locations,  # noqa:
 
 MAGIC_FILE = REPO_DIR / "data" / "magic_20884" / "magic_contribution_20884.txt"
 OUTPUT_DIR = SCRIPT_DIR
+# the MagIC upload file of the example in the repository, linked from the README sheet
+MAGIC_TEXT_URL = ("https://github.com/PolarWandering/FAIR_paleomag_data/blob/main/tables/"
+                  "shaat_dikes_example/magic_contribution_Shaat_pole.txt")
 
 PAPER = ("Swanson-Hysell et al. (2025), Oman was on the northern margin of a wide late Tonian "
          "Mozambique Ocean, Geology, doi:10.1130/G53450.1")
@@ -357,7 +360,8 @@ def main():
     readme = [
         "FAIR paleomagnetic data standard: template tables for one paleomagnetic pole",
         f"Example: the Shaat dikes pole of {PAPER}.",
-        f"Data: MagIC contribution {magic_id}, dataset DOI 10.7288/V4/MAGIC/{magic_id}.",
+        f"Data: MagIC contribution {magic_id}, dataset DOI 10.7288/V4/MAGIC/{magic_id}:",
+        (f"https://earthref.org/MagIC/{magic_id}", f"https://earthref.org/MagIC/{magic_id}"),
         "",
         f"These tables hold everything needed to regenerate the pole: the {len(tilt)} sites "
         f"averaged into the pole, the {n_spec} specimens averaged into those sites, their "
@@ -369,7 +373,9 @@ def main():
         "How to read the tables. Sheets 1–5 are the template in readable form. Under each column "
         "header are the MagIC data model 3.0 column (table.column), units and conventions, and "
         "whether MagIC requires it, this standard requires it, or it is recommended. The sheets "
-        "named 'MagIC …' hold the same data in MagIC form (magic_contribution_Shaat_pole.txt).",
+        "named 'MagIC …' hold the same data in MagIC form, one table per sheet. The same tables "
+        "as one MagIC upload file (tab-delimited text, magic_contribution_Shaat_pole.txt):",
+        (MAGIC_TEXT_URL, MAGIC_TEXT_URL),
         "",
         f"MagIC-required columns covered by the template: {len(covered)}; missing: "
         f"{len(missing)}. Validation of the MagIC form: "
