@@ -8,29 +8,46 @@ Code and figures associated with the manuscript "A community standard in FAIR pa
 FAIR_paleomag_data/
 ├── README.md
 ├── environment.yml                       conda environment for running the scripts
+├── fair_template/                        code shared by the template figure and tables
+│   ├── definition.py                         the fields of the template, by workbook sheet
+│   ├── magic.py                              reading, writing and validating MagIC files
+│   ├── readable.py                           the readable (template) form of MagIC tables
+│   └── resources/                            MagIC data model, method codes, vocabularies
 ├── data/                                 published datasets that the scripts read
 │   ├── magic_20884/
 │   │   └── magic_contribution_20884.txt      MagIC contribution 20884
 │   └── sauerbier2026_figshare/
 │       └── CA_sugarmill.col                  Paleomagnetism.org collection
-└── figures/                              one directory per figure
-    ├── data_gap/                         the gap between measured and published data
-    │   ├── data_gap.ipynb                    makes the figure from data/
-    │   ├── data/                             MagIC, Scopus and GPMDB inputs (CSV)
-    │   ├── data_gap.pdf                      figure (for the manuscript)
-    │   └── data_gap.png                      figure (600 dpi)
-    ├── platforms/                        the MagIC database and Paleomagnetism.org
-    │   ├── capture_platform_screenshots.py   step 1: take the screenshots
-    │   ├── make_platforms_figure.py          step 2: compose the figure
-    │   ├── screenshots/                      inputs written by step 1
-    │   │   ├── magic.png
-    │   │   └── pmag_library.png
-    │   ├── platforms.pdf                     figure (for the manuscript)
-    │   └── platforms.png                     figure (600 dpi)
-    └── workflow_archiving/               the levels of a dataset, as archived
-        ├── make_workflow_figure.py           makes the figure from data/
-        ├── workflow_archiving.pdf            figure (for the manuscript)
-        └── workflow_archiving.png            figure (600 dpi)
+├── figures/                              one directory per figure
+│   ├── data_gap/                         the gap between measured and published data
+│   │   ├── data_gap.ipynb                    makes the figure from data/
+│   │   ├── data/                             MagIC, Scopus and GPMDB inputs (CSV)
+│   │   ├── data_gap.pdf                      figure (for the manuscript)
+│   │   └── data_gap.png                      figure (600 dpi)
+│   ├── platforms/                        the MagIC database and Paleomagnetism.org
+│   │   ├── capture_platform_screenshots.py   step 1: take the screenshots
+│   │   ├── make_platforms_figure.py          step 2: compose the figure
+│   │   ├── screenshots/                      inputs written by step 1
+│   │   │   ├── magic.png
+│   │   │   └── pmag_library.png
+│   │   ├── platforms.pdf                     figure (for the manuscript)
+│   │   └── platforms.png                     figure (600 dpi)
+│   ├── template_fields/                  the fields of the template and how each is required
+│   │   ├── make_template_figure.py           makes the figure from fair_template/definition.py
+│   │   ├── template_fields.pdf               figure (for the manuscript)
+│   │   └── template_fields.png               figure (600 dpi)
+│   └── workflow_archiving/               the levels of a dataset, as archived
+│       ├── make_workflow_figure.py           makes the figure from data/
+│       ├── workflow_archiving.pdf            figure (for the manuscript)
+│       └── workflow_archiving.png            figure (600 dpi)
+└── tables/                               one directory per table
+    └── shaat_dikes_example/              Supplementary Table 2: the full Shaat dikes example
+        ├── make_shaat_dikes_example.py       makes the tables from data/
+        ├── FAIR_template_example_Oman2025.xlsx   the example in the template layout and in MagIC form
+        ├── magic_contribution_Shaat_pole.txt     the MagIC tables (MagIC upload format)
+        ├── build_report.md                   checks of each level against the one below
+        ├── specimen_fit_checks.csv
+        └── site_mean_checks.csv
 ```
 
 ## Data
@@ -51,6 +68,7 @@ The files are unmodified copies of the published files. The studies are:
 | --- | --- | --- | --- |
 | [`figures/data_gap/`](figures/data_gap/) | The gap between measured and published paleomagnetic data: (a) papers using reconstructions vs. papers reporting poles, (b) the data behind a pole in MagIC studies and (c) the share of published poles with data in MagIC | `data_gap.ipynb` | [`data_gap.pdf`](figures/data_gap/data_gap.pdf), [`data_gap.png`](figures/data_gap/data_gap.png) |
 | [`figures/platforms/`](figures/platforms/) | The two data platforms that the standard builds on: (a) the home page of the MagIC database and (b) the data library of Paleomagnetism.org | `capture_platform_screenshots.py`, `make_platforms_figure.py` | [`platforms.pdf`](figures/platforms/platforms.pdf), [`platforms.png`](figures/platforms/platforms.png) |
+| [`figures/template_fields/`](figures/template_fields/) | The fields of the template, one panel per sheet of the template workbook (measurements, specimen directions, site means, poles and ages), each field coloured by its requirement level and shown with its MagIC column | `make_template_figure.py` | [`template_fields.pdf`](figures/template_fields/template_fields.pdf), [`template_fields.png`](figures/template_fields/template_fields.png) |
 | [`figures/workflow_archiving/`](figures/workflow_archiving/) | The levels of a paleomagnetic dataset, from the measurements of a specimen to the pole, and where each level is archived: in a MagIC contribution (top row) and in a Paleomagnetism.org collection (bottom row) | `make_workflow_figure.py` | [`workflow_archiving.pdf`](figures/workflow_archiving/workflow_archiving.pdf), [`workflow_archiving.png`](figures/workflow_archiving/workflow_archiving.png) |
 
 ### `figures/data_gap/`
@@ -82,6 +100,17 @@ The committed screenshots were taken on 10 November 2026. Both websites change w
 
 The content of EarthRef.org, including the MagIC home page, is licensed under CC BY 4.0 unless otherwise noted on the site. The basemap of the library panel is drawn from OpenStreetMap tiles (© OpenStreetMap contributors).
 
+### `figures/template_fields/`
+
+The fields are defined in `fair_template/definition.py`, which also defines the full Shaat dikes example (Supplementary Table 2): for each field its group, readable header, MagIC table and column, units, requirement level and a note. Panel 1 shows the laboratory data files in two sections: the metadata supplied with the files and the measurement fields that the conversion must yield. The figure leaves out the citations (except in the ages panel), the experiment and measurement names, and the mean direction at the sampling location of the poles sheet, which are in the workbook.
+
+```bash
+cd figures/template_fields
+python make_template_figure.py   # writes template_fields.pdf and template_fields.png
+```
+
+The script writes the figure as an HTML page, prints it to PDF with headless Google Chrome or Chromium, crops the page to its content and renders the PNG from the PDF with `pdftoppm` (poppler). The Source Sans 3 and Source Code Pro fonts are loaded from Google Fonts, so the script needs a network connection unless the fonts are installed locally.
+
 ### `figures/workflow_archiving/`
 
 Each row of the figure follows one published dataset up the levels of the standard: the measurements of one specimen with its fits (vector component diagram), one fit in specimen, geographic and tilt-corrected coordinates, the fit directions of the site or locality of that specimen, and the VGPs with the pole. Under each panel is the part of the archive that holds that level.
@@ -95,6 +124,23 @@ The top row is read from MagIC contribution 20884. Every value plotted is read f
 
 The paleomagnetic plots and calculations are made with [PmagPy](https://github.com/PmagPy/PmagPy): the vector component diagrams with their fits (`pmagplotlib.plot_zij`), the equal-area plots (`ipmag.plot_net`, `plot_di`, `plot_di_mean`), the maps (`ipmag.make_orthographic_map`, `plot_vgp`, `plot_pole`), the reading of the MagIC contribution, the rotations to geographic coordinates, and the VGPs and their mean. The script adds the text written on and under the panels, the arrows between the coordinate systems of the second column, and the boxes and arrows of the archive strips. The plotting options that it uses to place PmagPy plots as panels of one figure, and to draw the vector component diagrams without a frame and with the fits as arrows, are in PmagPy releases later than 4.5.2.
 
+## Tables
+
+| Directory | Table | Script | Output |
+| --- | --- | --- | --- |
+| [`tables/shaat_dikes_example/`](tables/shaat_dikes_example/) | Supplementary Table 2: the full Shaat dikes example in the layout of the template and in MagIC form | `make_shaat_dikes_example.py` | [`FAIR_template_example_Oman2025.xlsx`](tables/shaat_dikes_example/FAIR_template_example_Oman2025.xlsx), [`magic_contribution_Shaat_pole.txt`](tables/shaat_dikes_example/magic_contribution_Shaat_pole.txt) |
+
+The tables follow the field definitions in `fair_template/definition.py`.
+
+### `tables/shaat_dikes_example/`
+
+```bash
+cd tables/shaat_dikes_example
+python make_shaat_dikes_example.py   # writes the spreadsheet, the MagIC file and the checks
+```
+
+The example is the part of MagIC contribution 20884 that the Shaat dikes pole needs: the 51 sites of the pole (listed in the pole row of the locations table), the 119 specimens averaged into them, their samples, their 2,596 demagnetization steps, the pole and the ages. The spreadsheet holds the readable sheets of the template, a field dictionary, the method codes used and the MagIC tables; the MagIC tables are also written as `magic_contribution_Shaat_pole.txt` and validated against the MagIC data model (`fair_template/resources/`). Each level is checked against the one below it (`build_report.md`): the specimen fits are re-made from the measurements with PmagPy and rotated, the site means are recalculated from the specimen fits, and the pole from the site VGPs.
+
 ## Environment
 
 The Python environment for running the scripts is specified in [`environment.yml`](environment.yml):
@@ -104,4 +150,4 @@ mamba env create -f environment.yml
 mamba activate fair_paleomag_data
 ```
 
-`capture_platform_screenshots.py` also requires Google Chrome (version 157 was used). The path to Chrome is set by the `CHROME` constant at the top of the script and is that of a macOS installation; change it on other systems.
+`capture_platform_screenshots.py` also requires Google Chrome (version 157 was used). The path to Chrome is set by the `CHROME` constant at the top of the script and is that of a macOS installation; change it on other systems. `make_template_figure.py` also requires Google Chrome or Chromium, which it looks for at the macOS installation path and then on the `PATH`.
