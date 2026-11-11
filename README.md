@@ -1,6 +1,6 @@
 # FAIR_paleomag_data
 
-Code and figures associated with the manuscript "A community standard in FAIR paleomagnetic data publication" which sets out a community standard for publishing paleomagnetic data so that they are findable, accessible, interoperable and reusable (FAIR).
+Code, figures, tables and the reference list associated with the manuscript "A community standard in FAIR paleomagnetic data publication" which sets out a community standard for publishing paleomagnetic data so that they are findable, accessible, interoperable and reusable (FAIR).
 
 ## Repository structure
 
@@ -40,6 +40,7 @@ FAIR_paleomag_data/
 │       ├── make_workflow_figure.py           makes the figure from data/
 │       ├── workflow_archiving.pdf            figure (for the manuscript)
 │       └── workflow_archiving.png            figure (600 dpi)
+├── references/                           the reference list of the manuscript (see references/README.md)
 └── tables/                               one directory per table
     └── shaat_dikes_example/              Supplementary Table 2: the full Shaat dikes example
         ├── make_shaat_dikes_example.py       makes the tables from data/
@@ -140,6 +141,10 @@ python make_shaat_dikes_example.py   # writes the spreadsheet, the MagIC file an
 ```
 
 The example is the part of MagIC contribution 20884 that the Shaat dikes pole needs: the 51 sites of the pole (listed in the pole row of the locations table), the 119 specimens averaged into them, their samples, their 2,596 demagnetization steps, the pole and the ages. The spreadsheet holds the readable sheets of the template, a field dictionary, the method codes used and the MagIC tables; the MagIC tables are also written as `magic_contribution_Shaat_pole.txt` and validated against the MagIC data model (`fair_template/resources/`). Each level is checked against the one below it (`build_report.md`): the specimen fits are re-made from the measurements with PmagPy and rotated, the site means are recalculated from the specimen fits, and the pole from the site VGPs.
+
+## References
+
+The reference list of the manuscript (AGU style), its BibTeX file and the script that builds it are in [`references/`](references/); see [`references/README.md`](references/README.md).
 
 ## Environment
 
