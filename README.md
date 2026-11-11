@@ -45,7 +45,9 @@ FAIR_paleomag_data/
     ├── converter_formats/                Table 1: formats read by the data converters
     │   ├── make_converter_formats_table.js   makes the table (Node.js)
     │   ├── package.json                      its dependency (docx)
-    │   └── converter_formats.docx            table (Word)
+    │   ├── converter_formats.docx            table with its caption (Word)
+    │   ├── converter_formats.pdf             table as a graphic (vector)
+    │   └── converter_formats.png             table as a graphic (600 dpi)
     └── shaat_dikes_example/              Supplementary Table 2: the full Shaat dikes example
         ├── make_shaat_dikes_example.py       makes the tables from data/
         ├── FAIR_template_example_Oman2025.xlsx   the example in the template layout and in MagIC form
@@ -133,7 +135,7 @@ The paleomagnetic plots and calculations are made with [PmagPy](https://github.c
 
 | Directory | Table | Script | Output |
 | --- | --- | --- | --- |
-| [`tables/converter_formats/`](tables/converter_formats/) | Table 1: the formats of demagnetization data read by the Paleomagnetism.org data converter (v2.7.0) and by the `convert_2_magic` module of PmagPy (v4.5.2) | `make_converter_formats_table.js` | [`converter_formats.docx`](tables/converter_formats/converter_formats.docx) |
+| [`tables/converter_formats/`](tables/converter_formats/) | Table 1: the formats of demagnetization data read by the Paleomagnetism.org data converter (v2.7.0) and by the `convert_2_magic` module of PmagPy (v4.5.2) | `make_converter_formats_table.js` | [`converter_formats.docx`](tables/converter_formats/converter_formats.docx), [`converter_formats.pdf`](tables/converter_formats/converter_formats.pdf), [`converter_formats.png`](tables/converter_formats/converter_formats.png) |
 | [`tables/shaat_dikes_example/`](tables/shaat_dikes_example/) | Supplementary Table 2: the full Shaat dikes example in the layout of the template and in MagIC form | `make_shaat_dikes_example.py` | [`FAIR_template_example_Oman2025.xlsx`](tables/shaat_dikes_example/FAIR_template_example_Oman2025.xlsx), [`magic_contribution_Shaat_pole.txt`](tables/shaat_dikes_example/magic_contribution_Shaat_pole.txt) |
 
 The tables follow the field definitions in `fair_template/definition.py`.
@@ -143,7 +145,7 @@ The tables follow the field definitions in `fair_template/definition.py`.
 ```bash
 cd tables/converter_formats
 npm install                            # installs the docx package
-node make_converter_formats_table.js   # writes converter_formats.docx
+node make_converter_formats_table.js   # writes converter_formats.docx, .pdf and .png
 ```
 
 ### `tables/shaat_dikes_example/`
@@ -168,4 +170,4 @@ mamba env create -f environment.yml
 mamba activate fair_paleomag_data
 ```
 
-Table 1 is made with Node.js (in the environment) and the `docx` package (`npm install` in `tables/converter_formats/`). `capture_platform_screenshots.py` also requires Google Chrome (version 157 was used). The path to Chrome is set by the `CHROME` constant at the top of the script and is that of a macOS installation; change it on other systems. `make_template_figure.py` also requires Google Chrome or Chromium, which it looks for at the macOS installation path and then on the `PATH`.
+Table 1 is made with Node.js (in the environment) and the `docx` package (`npm install` in `tables/converter_formats/`); its graphic is printed with Google Chrome or Chromium and rendered with poppler (in the environment). `capture_platform_screenshots.py` also requires Google Chrome (version 157 was used). The path to Chrome is set by the `CHROME` constant at the top of the script and is that of a macOS installation; change it on other systems. `make_template_figure.py` also requires Google Chrome or Chromium, which it looks for at the macOS installation path and then on the `PATH`.

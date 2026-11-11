@@ -3,7 +3,7 @@
   "private": true,
   "description": "Builds Table 1 of the FAIR paleomagnetic data standard paper",
   "scripts": {
-    "build": "node make_converter_formats_table.js converter_formats.docx"
+    "build": "node make_converter_formats_table.js"
   },
   "dependencies": {
     "docx": "9.15.3"
