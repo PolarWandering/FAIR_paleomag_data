@@ -160,7 +160,7 @@ SITE_FIELDS = [
       "dir_tilt_correction = 100"),
     F("Statistics", "k", "sites", "dir_k", "", STANDARD),
     F("Statistics", "α95", "sites", "dir_alpha95", "°", STANDARD),
-    F("Statistics", "R", "sites", "dir_r", "", RECOMMENDED, "From n and k"),
+    F("Statistics", "R", "sites", "dir_r", "", STANDARD, "From n and k"),
     F("VGP", "Polarity", "sites", "dir_polarity", "n, r, t, e", STANDARD),
     F("VGP", "VGP lat", "sites", "vgp_lat", "°N", STANDARD),
     F("VGP", "VGP lon", "sites", "vgp_lon", "°E", STANDARD),
